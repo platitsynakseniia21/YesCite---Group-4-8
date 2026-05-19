@@ -1,4 +1,4 @@
-#Діаграма прецедентів (Use Case Diagram)
+# Крок 3. Діаграма прецедентів (Use Case Diagram)
 
 ```mermaid
 graph LR
