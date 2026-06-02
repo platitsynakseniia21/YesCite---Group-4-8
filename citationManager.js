@@ -5,10 +5,10 @@ class CitationManager {
     }
 
     addCitation(author, title, year) {
-        if (!author  !title) {
+        if (!author || !title) {
             throw new Error("Author and title cannot be empty");
         }
-        if (year < 1400  year > 2030) {
+        if (year < 1400 || year > 2030) {
             throw new Error("Invalid year of publication");
         }
         
