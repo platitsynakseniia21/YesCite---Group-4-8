@@ -24,7 +24,7 @@ class CitationManager {
 
     generateBibliography(style) {
         if (!this.validStyles.includes(style)) {
-            throw new Error(Unsupported style: ${style});
+            throw new Error(`Unsupported style: ${style}`);
         }
         if (this.citations.length === 0) return [];
 
@@ -34,11 +34,11 @@ class CitationManager {
 
         for (const c of sorted) {
             if (style === "APA") {
-                result.push(${c.author} (${c.year}). ${c.title}.);
+                result.push(`${c.author} (${c.year}). ${c.title}.`);
             } else if (style === "MLA") {
-                result.push(${c.author}. ${c.title}. ${c.year}.);
+                result.push(`${c.author}. ${c.title}. ${c.year}.`);
             } else if (style === "DSTU") {
-                result.push(${c.author}. ${c.title} / ${c.author} // ${c.year}.);
+                result.push(`${c.author}. ${c.title} / ${c.author} // ${c.year}.`);
             }
         }
         return result;
