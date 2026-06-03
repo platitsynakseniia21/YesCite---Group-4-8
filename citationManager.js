@@ -44,7 +44,7 @@ class CitationManager {
 
         return [...this.citations]
             .sort((a, b) => a.author.localeCompare(b.author))
-            .map(BIBLIOGRAPHY_FORMATTERS[style]);
+            .map(citation => BIBLIOGRAPHY_FORMATTERS[style](citation));
     }
 
     getCitationsCount() {
