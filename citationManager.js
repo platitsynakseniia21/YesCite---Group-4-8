@@ -1,21 +1,33 @@
+// Виносимо стилі та логіку у словник (вирішує зауваження Тімофея №4, №5 та ідею Злати)
+const BIBLIOGRAPHY_FORMATTERS = {
+    APA: (citation) => `${citation.author} (${citation.year}). ${citation.title}.`,
+    MLA: (citation) => `${citation.author}. ${citation.title}. ${citation.year}.`,
+    DSTU: (citation) => `${citation.author}. ${citation.title} / ${citation.author} // ${citation.year}.`
+};
+
 class CitationManager {
+    // Виносимо магічні числа (вирішує зауваження Тімофея №1)
+    static MIN_YEAR = 1400;
+    static MAX_YEAR = 2030;
+
     constructor() {
         this.citations = [];
-        this.validStyles = ["APA", "MLA", "DSTU"];
     }
 
     addCitation(author, title, year) {
         if (!author || !title) {
             throw new Error("Author and title cannot be empty");
         }
-        if (year < 1400 || year > 2030) {
+        
+        if (year < CitationManager.MIN_YEAR || year > CitationManager.MAX_YEAR) {
             throw new Error("Invalid year of publication");
         }
-        
-        // Перевірка на дублікати
+
+        // Додали перевірку автора (зауваження №2) та змінили 'c' на 'citation' (зауваження №3)
         const isDuplicate = this.citations.some(
-            c => c.title === title && c.year === year
+            citation => citation.title === title && citation.year === year && citation.author === author
         );
+        
         if (isDuplicate) return false;
 
         this.citations.push({ author, title, year });
@@ -23,25 +35,16 @@ class CitationManager {
     }
 
     generateBibliography(style) {
-        if (!this.validStyles.includes(style)) {
+        // Використовуємо Strategy Pattern
+        if (!BIBLIOGRAPHY_FORMATTERS[style]) {
             throw new Error(`Unsupported style: ${style}`);
         }
+
         if (this.citations.length === 0) return [];
 
-        const result = [];
-        // Сортування за алфавітом
-        const sorted = [...this.citations].sort((a, b) => a.author.localeCompare(b.author));
-
-        for (const c of sorted) {
-            if (style === "APA") {
-                result.push(`${c.author} (${c.year}). ${c.title}.`);
-            } else if (style === "MLA") {
-                result.push(`${c.author}. ${c.title}. ${c.year}.`);
-            } else if (style === "DSTU") {
-                result.push(`${c.author}. ${c.title} / ${c.author} // ${c.year}.`);
-            }
-        }
-        return result;
+        return [...this.citations]
+            .sort((a, b) => a.author.localeCompare(b.author))
+            .map(BIBLIOGRAPHY_FORMATTERS[style]);
     }
 
     getCitationsCount() {
