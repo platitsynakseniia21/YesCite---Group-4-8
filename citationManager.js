@@ -52,4 +52,4 @@ class CitationManager {
     }
 }
 
-module.exports = CitationManager;
+module.exports = CitationManager; 
