@@ -1,8 +1,12 @@
 {
-  "name": "yescite-tests",
+  "name": "yescite-api",
   "version": "1.0.0",
   "scripts": {
+    "start": "node server.js",
     "test": "jest --coverage"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "jest": "^29.7.0"
